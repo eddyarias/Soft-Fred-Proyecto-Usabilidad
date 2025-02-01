@@ -1,8 +1,10 @@
+import { Jugador } from "./jugador.model";
+
 // src/app/models/partida.model.ts
 export interface Partida {
     codigo_partida: string;
     nombre_anfitrion: string;
-    jugadores: string[];
+    jugadores: Jugador[];
     tiempo_por_ronda: number;
     ronda_actual: number;
     estado: string;
@@ -11,4 +13,3 @@ export interface Partida {
     adivinanza: string;
     turno: string | null;
   }
-  

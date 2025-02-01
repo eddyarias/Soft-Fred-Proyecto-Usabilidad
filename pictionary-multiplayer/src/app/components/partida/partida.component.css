@@ -6,32 +6,19 @@
   border-radius: 4px;
 }
 
-/* .panel-left .player-list {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-}
- */
-/* .panel-left .player-card {
-  display: flex;
-  justify-content: space-between;
-  background-color: #3a3a3a;
-  padding: 8px;
-  margin-bottom: 8px;
-  border-radius: 5px;
-  font-size: 0.9rem;
-}
- */
-
 .panel-left .player-card {
   display: flex;
   justify-content: space-between;
-  background-color: #f8f9fa;
-  padding: 8px;
-  margin-bottom: 8px;
+  padding: 10px 4px;
   border-radius: 5px;
   font-size: 0.9rem;
   align-items: center;
+}
+
+.name-score {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
 }
 
 .panel-left .player-card .player-name {
@@ -45,8 +32,10 @@
 
 
 .panel-right .chat-box {
-  height: 530px;
+  height: 545px;
   overflow-y: auto;
+  overflow-x: hidden;
+  word-wrap: break-word;
 }
 
 .mensaje-ingreso {

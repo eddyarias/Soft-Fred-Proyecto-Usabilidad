@@ -12,7 +12,7 @@
       </button>
     </div>
     <div class="container-username">
-      <input [(ngModel)]="username" name="username" aria-label="Ingresa tu nombre" placeholder="Ingresa tu nombre"
+      <input [(ngModel)]="username" maxlength="13" name="username" aria-label="Ingresa tu nombre" placeholder="Ingresa tu nombre"
         required tabindex="0" />
       <button (click)="randomizeAvatar()" aria-label="Avatar aleatorio" tabindex="0">🎲</button>
 
@@ -28,7 +28,7 @@
     </div>
 
 
-    <app-unirse-partida *ngIf="showJoin" (partidaUnida)="onPartidaUnida($event)" [nombreJugador]="username"
+    <app-unirse-partida *ngIf="showJoin" (partidaUnida)="onPartidaUnida($event)" [nombreJugador]="username" [avatarJugador]="selectedAvatar"
       [onClose]="handleCloseJoin.bind(this)"></app-unirse-partida>
   </div>
 

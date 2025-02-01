@@ -20,10 +20,22 @@
     <!-- Left Panel: Player List -->
     <div class="col-2 p-0">
       <div class="panel-left me-1">
-        <div *ngFor="let jugador of jugadores" class="player-card">
-          <span class="player-name">{{ jugador }}</span>
-          <span class="player-score">0 puntos</span>
+        @for (jugador of jugadores; track $index) {
+        <div class="player-card" [ngClass]="{
+            'mensaje-par': $index % 2 === 0,
+          }">
+          <span> #1 </span>
+
+          <div class="name-score">
+            <span class="player-name">{{ jugador.nombre }}</span>
+            <span class="player-score">0 puntos</span>
+          </div>
+
+          <div>
+            <p class="m-0 fs-2"> {{jugador.avatar}} </p>
+          </div>
         </div>
+        }
       </div>
     </div>
 
@@ -50,28 +62,29 @@
         <div class="container-right container-fluid p-0">
           <div class="chat-box">
             @for (mensaje of mensajes; track $index) {
-            <div class="p-2" [ngClass]="{
+            <div class="row">
+              <div class="col-12 py-2 ps-3" [ngClass]="{
                   'palabra-adivinada': mensaje.mensaje === 'ha adivinado la palabra',
                   'mensaje-par': $index % 2 === 0,
               }">
-              @if (mensaje.mensaje === 'ha creado la partida' || mensaje.mensaje === 'ha ingresado a la partida') {
-              <p class="mensaje-ingreso m-0">{{mensaje.nombre_jugador}} {{ mensaje.mensaje }} </p>
-              } @else if(mensaje.mensaje === 'ha adivinado la palabra') {
-              <p class="m-0">{{mensaje.nombre_jugador}} {{ mensaje.mensaje }} </p>
-              }@else if(mensaje.mensaje === 'esta dibujando') {
-              <p class="m-0 text-primary">{{mensaje.nombre_jugador}} {{ mensaje.mensaje }} </p>
-              } @else {
-              <p class="m-0">{{mensaje.nombre_jugador}}: {{ mensaje.mensaje }}</p>
-
-              }
+                @if (mensaje.mensaje === 'ha creado la partida' || mensaje.mensaje === 'ha ingresado a la partida') {
+                <p class="mensaje-ingreso m-0">{{mensaje.nombre_jugador}} {{ mensaje.mensaje }} </p>
+                } @else if(mensaje.mensaje === 'ha adivinado la palabra') {
+                <p class="m-0">{{mensaje.nombre_jugador}} {{ mensaje.mensaje }} </p>
+                }@else if(mensaje.mensaje === 'esta dibujando') {
+                <p class="m-0 text-primary">{{mensaje.nombre_jugador}} {{ mensaje.mensaje }} </p>
+                } @else {
+                <p class="m-0">{{mensaje.nombre_jugador}}: {{ mensaje.mensaje }}</p>
+                }
+              </div>
             </div>
             }
           </div>
-          <div class="row m-1">
-            <div class="col-md-8 col-sm-12 p-0">
+          <div class="row mx-1 mt-1">
+            <div class="col-8 p-0">
               <input type="text" [(ngModel)]="mensajeChat" class="w-100" placeholder="Escribe aquí" />
             </div>
-            <div class="col-md-4 col-sm-12 p-0">
+            <div class="col-4 p-0">
               <button class="w-100" (click)="enviarMensajeChat()">Enviar</button>
             </div>
           </div>

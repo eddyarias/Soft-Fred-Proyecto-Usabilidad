@@ -122,7 +122,7 @@ def handle_disconnect():
 
 # Evento para unirse a una partida y unirse a la sala del juego
 @socketio.on('unirse_partida_socket')
-def unirse_partida_socket(codigo_partida, nombre_jugador):
+def unirse_partida_socket(codigo_partida, nombre_jugador, avatar_jugador):
     if codigo_partida not in partidas:
         emit('error', {'mensaje': 'Código de partida inválido'})
         return
@@ -131,10 +131,12 @@ def unirse_partida_socket(codigo_partida, nombre_jugador):
     if len(partida['jugadores']) >= partida["max_jugadores"]:
         emit('error', {'mensaje': 'La partida está llena'})
         return
-
-    partida['jugadores'].append(nombre_jugador)
+    
+    # Añadir jugadores y su avatar
+    partida['jugadores'].append({'nombre': nombre_jugador, 'avatar': avatar_jugador })
     join_room(codigo_partida)  # Unir al jugador a la sala del juego
-    emit('actualizar_jugadores', {'lista': f'{partida["jugadores"]}'}, room=codigo_partida)
+    emit('actualizar_jugadores', {'lista': partida['jugadores']}, room=codigo_partida)
+
 
 
 

@@ -6,6 +6,7 @@ import { Observable } from 'rxjs';
 import { io, Socket } from 'socket.io-client';
 import { Partida } from '../models/partida.model';
 import { Mensaje } from '../models/mensaje.model';
+import { Jugador } from '../models/jugador.model';
 
 @Injectable({
   providedIn: 'root'
@@ -79,8 +80,8 @@ export class PartidaService {
     return this.http.get<Partida>(`${this.apiUrl}/estado_partida/${codigoPartida}`);
   }
 
-  unirseASala(codigoPartida: string, nombreJugador: string): void {
-    this.socket.emit('unirse_partida_socket', codigoPartida, nombreJugador);
+  unirseASala(codigoPartida: string, nombreJugador: string, avatarJugador: string): void {
+    this.socket.emit('unirse_partida_socket', codigoPartida, nombreJugador, avatarJugador);
   }
 
   // Salir de la sala
@@ -152,26 +153,15 @@ export class PartidaService {
 
 
   // En el servicio, escucha los cambios de jugadores (unión a la partida)
-  escucharUnirsePartida(): Observable<string[]> {
-    return new Observable<string[]>(observer => {
-      this.socket.on('actualizar_jugadores', (response: { lista: string }) => {
+  escucharUnirsePartida(): Observable<Jugador[]> {
+    return new Observable<Jugador[]>(observer => {
+      this.socket.on('actualizar_jugadores', (response: { lista: Jugador[] }) => {
         try {
-          // Si la lista está en formato JSON (como un array de jugadores)
-          const jugadores = JSON.parse(response.lista);
+          console.log(response.lista)
+          observer.next(response.lista);
 
-          // Si la respuesta es una lista de jugadores, emítela
-          if (Array.isArray(jugadores)) {
-            observer.next(jugadores);
-          } else {
-            // Si no es un array, muestra un error o maneja el caso
-            observer.error('La respuesta no contiene una lista válida de jugadores');
-          }
         } catch (error) {
-          // Si ocurre un error al intentar parsear, puedes dividir el string o manejarlo de otra manera
-          console.error('Error al parsear la lista de jugadores', error);
-          // Si el formato es un string separado por comas, podemos dividirlo en un array
-          const jugadores = response.lista.split(',').map(jugador => jugador.trim());
-          observer.next(jugadores);
+          console.error('Error al obtener la lista de jugadores', error);
         }
       });
     });
