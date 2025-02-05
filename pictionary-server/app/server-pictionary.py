@@ -6,8 +6,8 @@ import random
 import time
 
 app = Flask(__name__)
-CORS(app)  # Permitir CORS para todas las rutas
-socketio = SocketIO(app, cors_allowed_origins="http://localhost:4200")  # Especificar el origen de tu frontend
+CORS(app, origins=['*'])  # Permitir CORS para todas las rutas
+socketio = SocketIO(app, cors_allowed_origins="*")  # Especificar el origen de tu frontend
 
 # clase Jugador
 class Jugador:
@@ -59,8 +59,11 @@ def crear_partida():
 
 @app.route('/palabras', methods=['GET'])
 def get_opciones_palabras_route():
-    opciones_palabras = random.sample(palabras, 3)
-    return jsonify({'opciones': opciones_palabras}), 200
+    try:
+        opciones_palabras = random.sample(palabras, 3)
+        return jsonify({'opciones': opciones_palabras}), 200
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
 
 
 
