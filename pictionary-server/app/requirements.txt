@@ -4,3 +4,4 @@ flask-cors==3.0.10
 eventlet==0.33.3  # Requerido para flask-socketio
 gevent==22.10.2   # Alternativa a eventlet (no se necesitan ambos)
 gevent-websocket==0.10.1  # Soporte WebSocket para gevent
+gunicorn==23.0.0
