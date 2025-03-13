@@ -1,3 +1,4 @@
+
 # Imagen base de Python
 FROM python:3.10-slim
 
